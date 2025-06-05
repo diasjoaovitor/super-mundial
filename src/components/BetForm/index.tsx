@@ -76,6 +76,7 @@ export const BetForm = ({
                           sx={{ ...S.Grid, textAlign: 'center', mx: 2, gap: 2 }}
                         >
                           <TextField
+                            type="number"
                             variant="outlined"
                             defaultValue={game.result[0]}
                             onChange={(e) =>
@@ -90,6 +91,7 @@ export const BetForm = ({
                           />
                           <Typography>X</Typography>
                           <TextField
+                            type="number"
                             variant="outlined"
                             defaultValue={game.result[1]}
                             onChange={(e) =>

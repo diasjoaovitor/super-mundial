@@ -6,7 +6,16 @@ export const Wrapper: SxProps<Theme> = {
     xs: '1fr',
     md: '1fr 1fr'
   },
-  gap: 2
+  gap: 2,
+  '& input[type=number]': {
+    MozAppearance: 'textfield'
+  },
+  '& input[type=number]::-webkit-outer-spin-button': {
+    WebkitAppearance: 'none'
+  },
+  '& input[type=number]::-webkit-inner-spin-button': {
+    WebkitAppearance: 'none'
+  }
 }
 
 export const Grid: SxProps<Theme> = {
