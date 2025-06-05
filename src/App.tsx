@@ -1,10 +1,18 @@
 import { Container, Typography } from '@mui/material'
 
-import { Alert, BetForm, ContactForm,Header, Layout } from '@/components'
+import {
+  Alert,
+  BetForm,
+  ContactForm,
+  Dialog,
+  Header,
+  Layout
+} from '@/components'
 import { useAppHandler } from '@/hooks'
 
 export const App = () => {
-  const { betFormProps, alertProps, contactFormProps } = useAppHandler()
+  const { betFormProps, alertProps, contactFormProps, dialogProps } =
+    useAppHandler()
 
   return (
     <Layout>
@@ -16,6 +24,7 @@ export const App = () => {
         <BetForm {...betFormProps} />
         <ContactForm {...contactFormProps} />
       </Container>
+      {dialogProps && <Dialog {...dialogProps} />}
       {alertProps && <Alert {...alertProps} />}
     </Layout>
   )

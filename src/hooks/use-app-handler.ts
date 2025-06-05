@@ -7,7 +7,10 @@ import {
   TAlertProps,
   TBetFormProps,
   TContactFormData,
-  TContactFormProps} from '@/components'
+  TContactFormProps,
+  TDialogParams,
+  TDialogProps
+} from '@/components'
 import { data, TData, TGroup } from '@/constants'
 import { pdf } from '@/functions'
 import {
@@ -34,6 +37,7 @@ export const useAppHandler = () => {
     Object.keys(defaultBets).length > 0 ? defaultBets : data
   )
   const [alert, setAlert] = useState<TAlertParams | null>(null)
+  const [dialog, setDialog] = useState<TDialogParams | null>(null)
   const [contactFormIsOpened, setContactFormIsOpened] = useState(false)
 
   const handleChange = ({ group, index, key, value }: TBetChangeParams) => {
@@ -47,6 +51,7 @@ export const useAppHandler = () => {
   const handleClear = () => {
     setBets(data)
     saveToLocalStorage('data', data)
+    setDialog(null)
   }
 
   const handleBetFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,7 +81,12 @@ export const useAppHandler = () => {
   const betFormProps: TBetFormProps = {
     bets,
     handleChange,
-    handleClear,
+    handleClear: () => {
+      setDialog({
+        title: 'Deseja realmente limpar os dados?',
+        handleAccept: handleClear
+      })
+    },
     handleSubmit: handleBetFormSubmit
   }
 
@@ -85,6 +95,14 @@ export const useAppHandler = () => {
         open: !!alert,
         ...alert,
         handleClose: () => setAlert(null)
+      }
+    : null
+
+  const dialogProps: TDialogProps | null = dialog
+    ? {
+        open: !!dialog,
+        ...dialog,
+        handleClose: () => setDialog(null)
       }
     : null
 
@@ -98,6 +116,7 @@ export const useAppHandler = () => {
   return {
     betFormProps,
     alertProps,
+    dialogProps,
     contactFormProps
   }
 }
