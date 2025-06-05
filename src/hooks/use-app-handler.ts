@@ -1,0 +1,103 @@
+import * as pdfMake from 'pdfmake/build/pdfmake'
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'
+import { useState } from 'react'
+
+import {
+  TAlertParams,
+  TAlertProps,
+  TBetFormProps,
+  TContactFormData,
+  TContactFormProps} from '@/components'
+import { data, TData, TGroup } from '@/constants'
+import { pdf } from '@/functions'
+import {
+  applyInputFocus,
+  getFromLocalStorage,
+  hasInvalidBet,
+  saveToLocalStorage
+} from '@/utils'
+
+export type TBetChangeParams = {
+  group: TGroup
+  index: number
+  key: 'home' | 'away'
+  value: string | number
+}
+
+export const useAppHandler = () => {
+  ;(pdfMake as any).vfs = pdfFonts.vfs
+
+  const defaultBets = getFromLocalStorage('data')
+  const defaultContact = getFromLocalStorage('contact')
+
+  const [bets, setBets] = useState<TData>(
+    Object.keys(defaultBets).length > 0 ? defaultBets : data
+  )
+  const [alert, setAlert] = useState<TAlertParams | null>(null)
+  const [contactFormIsOpened, setContactFormIsOpened] = useState(false)
+
+  const handleChange = ({ group, index, key, value }: TBetChangeParams) => {
+    setBets((bets) => {
+      bets[group][index].result[key === 'home' ? 0 : 1] = value
+      saveToLocalStorage('data', bets)
+      return bets
+    })
+  }
+
+  const handleClear = () => {
+    setBets(data)
+    saveToLocalStorage('data', data)
+  }
+
+  const handleBetFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const invalidBet = hasInvalidBet(bets)
+
+    if (invalidBet) {
+      setAlert({
+        severity: 'error',
+        title: 'Todos os campos são obrigatórios'
+      })
+      applyInputFocus(e.currentTarget.elements)
+      return
+    }
+
+    setContactFormIsOpened(true)
+  }
+
+  const handleContactFormSubmit = (data: TContactFormData) => {
+    const doc = pdf(bets, data)
+    pdfMake.createPdf(doc).open()
+    setContactFormIsOpened(false)
+    saveToLocalStorage('contact', data)
+  }
+
+  const betFormProps: TBetFormProps = {
+    bets,
+    handleChange,
+    handleClear,
+    handleSubmit: handleBetFormSubmit
+  }
+
+  const alertProps: TAlertProps | null = alert
+    ? {
+        open: !!alert,
+        ...alert,
+        handleClose: () => setAlert(null)
+      }
+    : null
+
+  const contactFormProps: TContactFormProps = {
+    isOpened: contactFormIsOpened,
+    handleClose: () => setContactFormIsOpened(false),
+    data: defaultContact,
+    onSubmit: handleContactFormSubmit
+  }
+
+  return {
+    betFormProps,
+    alertProps,
+    contactFormProps
+  }
+}
