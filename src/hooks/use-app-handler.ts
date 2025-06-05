@@ -12,7 +12,8 @@ import {
   TDialogProps
 } from '@/components'
 import { data, TData, TGroup } from '@/constants'
-import { pdf } from '@/functions'
+import { convertPdf, pdf } from '@/functions'
+import { sendEmail } from '@/functions/email'
 import {
   applyInputFocus,
   getFromLocalStorage,
@@ -71,11 +72,28 @@ export const useAppHandler = () => {
     setContactFormIsOpened(true)
   }
 
-  const handleContactFormSubmit = (data: TContactFormData) => {
-    const doc = pdf(bets, data)
-    pdfMake.createPdf(doc).open()
+  const handleContactFormSubmit = async (data: TContactFormData) => {
+    const doc = pdf(bets, { ...data, email: data.email || 'Não informado' })
+    const createdPdf = pdfMake.createPdf(doc)
+    createdPdf.open()
     setContactFormIsOpened(false)
     saveToLocalStorage('contact', data)
+    if (!data.email) return
+    try {
+      const pdfBase64 = await convertPdf(createdPdf)
+      await sendEmail(data, pdfBase64)
+      setAlert({
+        severity: 'success',
+        title: 'Email enviado com sucesso!'
+      })
+    } catch (error) {
+      console.error(error)
+      setAlert({
+        severity: 'error',
+        title: 'Erro ao enviar email!',
+        description: 'Envie o PDF manualmente.'
+      })
+    }
   }
 
   const betFormProps: TBetFormProps = {

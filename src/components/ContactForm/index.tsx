@@ -37,7 +37,7 @@ export const ContactForm = ({
     formState: { errors },
     control
   } = useForm<TContactFormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as any,
     defaultValues
   })
 
@@ -72,6 +72,7 @@ export const ContactForm = ({
           {...register('email')}
           type="email"
           label="Email"
+          placeholder="Insira seu email para receber o PDF"
           defaultValue={data?.email}
           error={!!errors.email}
           helperText={errors.email?.message}

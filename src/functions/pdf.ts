@@ -1,3 +1,4 @@
+import { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import { TDocumentDefinitions } from 'pdfmake/interfaces'
 
 import { TData } from '@/constants'
@@ -82,4 +83,19 @@ export const pdf = (data: TData, info: TInfo): TDocumentDefinitions => {
       }
     ]
   }
+}
+
+export const convertPdf = async (pdf: TCreatedPdf) => {
+  const pdfBlob = await new Promise<Blob>((resolve) => {
+    pdf.getBlob((blob) => {
+      resolve(blob)
+    })
+  })
+  const reader = new FileReader()
+  reader.readAsDataURL(pdfBlob)
+  reader.onloadend = async () => {
+    const base64data = reader.result as string
+    return base64data
+  }
+  return reader.result as string
 }
