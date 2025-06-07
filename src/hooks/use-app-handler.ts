@@ -12,10 +12,11 @@ import {
   TDialogProps
 } from '@/components'
 import { data, TData, TGroup } from '@/constants'
-import { convertPdf, pdf } from '@/functions'
+import { pdf } from '@/functions'
 import { sendEmail } from '@/functions/email'
 import {
   applyInputFocus,
+  dataObjectToHtml,
   getFromLocalStorage,
   hasInvalidBet,
   saveToLocalStorage
@@ -40,6 +41,7 @@ export const useAppHandler = () => {
   const [alert, setAlert] = useState<TAlertParams | null>(null)
   const [dialog, setDialog] = useState<TDialogParams | null>(null)
   const [contactFormIsOpened, setContactFormIsOpened] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = ({ group, index, key, value }: TBetChangeParams) => {
     setBets((bets) => {
@@ -74,14 +76,14 @@ export const useAppHandler = () => {
 
   const handleContactFormSubmit = async (data: TContactFormData) => {
     const doc = pdf(bets, { ...data, email: data.email || 'Não informado' })
-    const createdPdf = pdfMake.createPdf(doc)
-    createdPdf.open()
+    pdfMake.createPdf(doc).open()
     setContactFormIsOpened(false)
     saveToLocalStorage('contact', data)
     if (!data.email) return
     try {
-      const pdfBase64 = await convertPdf(createdPdf)
-      await sendEmail(data, pdfBase64)
+      setIsLoading(true)
+      const html = dataObjectToHtml(bets)
+      await sendEmail(data, html)
       setAlert({
         severity: 'success',
         title: 'Email enviado com sucesso!'
@@ -93,6 +95,8 @@ export const useAppHandler = () => {
         title: 'Erro ao enviar email!',
         description: 'Envie o PDF manualmente.'
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -135,6 +139,7 @@ export const useAppHandler = () => {
     betFormProps,
     alertProps,
     dialogProps,
-    contactFormProps
+    contactFormProps,
+    isLoading
   }
 }

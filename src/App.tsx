@@ -6,12 +6,13 @@ import {
   ContactForm,
   Dialog,
   Header,
-  Layout
+  Layout,
+  Loader
 } from '@/components'
 import { useAppHandler } from '@/hooks'
 
 export const App = () => {
-  const { betFormProps, alertProps, contactFormProps, dialogProps } =
+  const { betFormProps, alertProps, contactFormProps, dialogProps, isLoading } =
     useAppHandler()
 
   return (
@@ -26,6 +27,7 @@ export const App = () => {
       </Container>
       {dialogProps && <Dialog {...dialogProps} />}
       {alertProps && <Alert {...alertProps} />}
+      <Loader open={isLoading} />
     </Layout>
   )
 }

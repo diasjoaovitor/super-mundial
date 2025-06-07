@@ -1,5 +1,6 @@
 import { TContactFormData } from '@/components'
 import { TData } from '@/constants'
+import { columns } from '@/functions'
 
 const LOCAL_STORAGE_KEY = 'bolao-2025-'
 
@@ -39,4 +40,35 @@ export const phoneMask = (value: string) => {
     .replace(/(\d{2})(\d)/, '($1) $2')
     .replace(/(\d{5})(\d)/, '$1-$2')
     .replace(/(-\d{4})\d+$/, '$1')
+}
+
+export const dataObjectToHtml = (data: TData) => {
+  let html =
+    '<table style="text-align:center;border-collapse: collapse;"><thead><tr>'
+  columns.forEach((col) => {
+    html += `<th style="border: 1px solid #000;padding: 8px;">${col}</th>`
+  })
+  html += '</tr></thead><tbody>'
+  Object.entries(data).forEach(([group, matches]) => {
+    matches.forEach((match, index) => {
+      html += '<tr>'
+      ;[
+        index + 1,
+        match.date,
+        match.time,
+        match.local,
+        group,
+        match.home,
+        match.result[0],
+        'X',
+        match.result[1],
+        match.away
+      ].map((value) => {
+        html += `<td style="border: 1px solid #000;padding: 8px;">${value}</td>`
+      })
+      html += '</tr>'
+    })
+  })
+  html += '</tbody></table>'
+  return html
 }
