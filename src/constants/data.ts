@@ -167,7 +167,7 @@ export const data: TData = {
       date: '16/jun',
       time: '16:00',
       local: 'Atlanta',
-      home: 'Amé-MEX x Los Ang',
+      home: 'Los Angeles (EUA)',
       away: 'Chelsea (ING)',
       result: [null, null]
     },
@@ -191,7 +191,7 @@ export const data: TData = {
       date: '20/jun',
       time: '19:00',
       local: 'Geodis Park',
-      home: 'Amé-MEX x Los Ang',
+      home: 'Los Angeles (EUA)',
       away: 'Espérance T. (TUN)',
       result: [null, null]
     },
@@ -200,7 +200,7 @@ export const data: TData = {
       time: '22:00',
       local: 'Camping World',
       home: 'Flamengo',
-      away: 'Amé-MEX x Los Ang',
+      away: 'Los Angeles (EUA)',
       result: [null, null]
     },
     {
