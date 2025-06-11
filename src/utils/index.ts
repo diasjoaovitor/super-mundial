@@ -4,11 +4,11 @@ import { columns } from '@/functions'
 
 const LOCAL_STORAGE_KEY = 'bolao-2025-'
 
-type TKey = 'data' | 'contact'
+type TKey = 'data' | 'contact' | 'first-access'
 
 export const saveToLocalStorage = (
   key: TKey,
-  value: TData | TContactFormData
+  value: TData | TContactFormData | boolean
 ) => {
   localStorage.setItem(LOCAL_STORAGE_KEY + key, JSON.stringify(value))
 }

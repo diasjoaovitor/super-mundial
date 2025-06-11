@@ -1,6 +1,6 @@
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   TAlertParams,
@@ -9,7 +9,8 @@ import {
   TContactFormData,
   TContactFormProps,
   TDialogParams,
-  TDialogProps
+  TDialogProps,
+  TWelcomeProps
 } from '@/components'
 import { data, TData, TGroup } from '@/constants'
 import { pdf } from '@/functions'
@@ -34,14 +35,24 @@ export const useAppHandler = () => {
 
   const defaultBets = getFromLocalStorage('data')
   const defaultContact = getFromLocalStorage('contact')
+  const isFirstAccess = !!getFromLocalStorage('first-access')
 
-  const [bets, setBets] = useState<TData>(
-    Object.keys(defaultBets).length > 0 ? defaultBets : data
-  )
+  const hasBet = Object.keys(defaultBets).length
+
+  const [bets, setBets] = useState<TData>(hasBet > 0 ? defaultBets : data)
   const [alert, setAlert] = useState<TAlertParams | null>(null)
   const [dialog, setDialog] = useState<TDialogParams | null>(null)
   const [contactFormIsOpened, setContactFormIsOpened] = useState(false)
+  const [welcomeModalIsOpened, setWelcomeModalIsOpened] = useState(false)
+
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (isFirstAccess) {
+      setWelcomeModalIsOpened(true)
+      saveToLocalStorage('first-access', false)
+    }
+  }, [isFirstAccess])
 
   const handleChange = ({ group, index, key, value }: TBetChangeParams) => {
     setBets((bets) => {
@@ -135,11 +146,21 @@ export const useAppHandler = () => {
     onSubmit: handleContactFormSubmit
   }
 
+  const welcomeProps: TWelcomeProps = {
+    isOpened: welcomeModalIsOpened,
+    isFirstAccess,
+    handleClose: () => setWelcomeModalIsOpened(false)
+  }
+
+  const handleWelcomeModalOpen = () => setWelcomeModalIsOpened(true)
+
   return {
     betFormProps,
     alertProps,
-    dialogProps,
     contactFormProps,
-    isLoading
+    dialogProps,
+    welcomeProps,
+    isLoading,
+    handleWelcomeModalOpen
   }
 }

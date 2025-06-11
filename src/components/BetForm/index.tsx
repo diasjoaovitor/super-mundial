@@ -115,8 +115,21 @@ export const BetForm = ({
           )
         })}
       </Box>
-      <ButtonGroup sx={{ gap: 2 }}>
-        <Button variant="contained" color="primary" type="submit">
+      <ButtonGroup
+        sx={{
+          gap: 2,
+          display: 'flex',
+          maxWidth: {
+            md: 'calc(50% - .5rem)'
+          }
+        }}
+      >
+        <Button
+          sx={{ flex: 1 }}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
           Salvar Aposta
         </Button>
         <Button variant="contained" color="error" type="reset">
