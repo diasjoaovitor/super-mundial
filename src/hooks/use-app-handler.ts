@@ -12,7 +12,7 @@ import {
   TDialogProps,
   TWelcomeProps
 } from '@/components'
-import { data, TData, TGroup } from '@/constants'
+import { contact, data, TData, TGroup } from '@/constants'
 import { pdf } from '@/functions'
 import { sendEmail } from '@/functions/email'
 import {
@@ -90,11 +90,13 @@ export const useAppHandler = () => {
     pdfMake.createPdf(doc).open()
     setContactFormIsOpened(false)
     saveToLocalStorage('contact', data)
-    if (!data.email) return
     try {
       setIsLoading(true)
       const html = dataObjectToHtml(bets)
-      await sendEmail(data, html)
+      await sendEmail(
+        data.email ? data : { ...data, email: contact.defaultMail },
+        html
+      )
       setAlert({
         severity: 'success',
         title: 'Email enviado com sucesso!'
