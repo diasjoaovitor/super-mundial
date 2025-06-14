@@ -88,6 +88,7 @@ export const BetForm = ({
                               })
                             }
                             sx={{ minWidth: 50 }}
+                            slotProps={{ htmlInput: { min: 0 } }}
                           />
                           <Typography>X</Typography>
                           <TextField
@@ -103,6 +104,7 @@ export const BetForm = ({
                               })
                             }
                             sx={{ minWidth: 50 }}
+                            slotProps={{ htmlInput: { min: 0 } }}
                           />
                         </Box>
                         <Typography>{game.away}</Typography>

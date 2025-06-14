@@ -19,14 +19,19 @@ export const getFromLocalStorage = (key: TKey) => {
 
 export const hasInvalidBet = (bet: TData) => {
   return Object.values(bet).some((group) =>
-    group.some(({ result }) => result.some((value) => !value))
+    group.some(({ result }) =>
+      result.some((value) => {
+        const number = Number(value)
+        return !(number >= 0)
+      })
+    )
   )
 }
 
 export const applyInputFocus = (elements: HTMLFormControlsCollection) => {
   for (const element of elements) {
     if (element instanceof HTMLInputElement) {
-      if (element.value === '') {
+      if (element.value === '' || Number(element.value) < 0) {
         element.focus()
         break
       }
