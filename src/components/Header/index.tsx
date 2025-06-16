@@ -26,6 +26,9 @@ export const Header = ({ handleClick }: THeaderProps) => {
             xs: 'center',
             sm: 'space-between'
           },
+          textAlign: {
+            xs: 'center'
+          },
           flexWrap: 'wrap',
           gap: 2
         }}
