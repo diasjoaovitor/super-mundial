@@ -26,7 +26,15 @@ export const App = () => {
   return (
     <Layout>
       <Header handleClick={handleWelcomeModalOpen} />
-      <Container component="main">
+      <Container
+        component="main"
+        sx={{
+          textAlign: {
+            xs: 'center',
+            sm: 'left'
+          }
+        }}
+      >
         <Typography component="h2" variant="h4" sx={{ mb: 2 }}>
           Preencha seus palpites
         </Typography>
