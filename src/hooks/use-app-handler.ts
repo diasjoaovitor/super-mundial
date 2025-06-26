@@ -66,6 +66,10 @@ export const useAppHandler = () => {
     setBets(data)
     saveToLocalStorage('data', data)
     setDialog(null)
+    setAlert({
+      severity: 'success',
+      title: 'Dados limpos com sucesso!'
+    })
   }
 
   const handleBetFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,7 +80,7 @@ export const useAppHandler = () => {
     if (invalidBet) {
       setAlert({
         severity: 'error',
-        title: 'Todos os campos são obrigatórios'
+        title: 'Existem campos com dados inválidos!'
       })
       applyInputFocus(e.currentTarget.elements)
       return

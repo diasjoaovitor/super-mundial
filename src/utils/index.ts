@@ -22,7 +22,8 @@ export const hasInvalidBet = (bet: TData) => {
     group.some(({ result }) =>
       result.some((value) => {
         const number = Number(value)
-        return !(number >= 0)
+        if (Number.isNaN(number) || number < 0 || !Number.isInteger(number))
+          return true
       })
     )
   )
