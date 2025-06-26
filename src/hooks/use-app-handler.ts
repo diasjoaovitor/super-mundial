@@ -87,7 +87,7 @@ export const useAppHandler = () => {
 
   const handleContactFormSubmit = async (data: TContactFormData) => {
     const doc = pdf(bets, { ...data, email: data.email || 'Não informado' })
-    pdfMake.createPdf(doc).open()
+    pdfMake.createPdf(doc).download()
     setContactFormIsOpened(false)
     saveToLocalStorage('contact', data)
     try {

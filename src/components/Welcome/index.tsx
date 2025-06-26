@@ -23,6 +23,7 @@ const infoListItems = [
   'Preencha seus palpites para cada jogo',
   'Salve seus palpites',
   'Forneça seus dados de contato',
+  'Será realizado o download do PDF com seus palpites',
   'Você receberá um email com confirmação e instruções de pagamento'
 ]
 
