@@ -1,14 +1,14 @@
 import { TContactFormData } from '@/components'
-import { TData } from '@/constants'
+import { TData, TData2 } from '@/constants'
 import { columns } from '@/functions'
 
 const LOCAL_STORAGE_KEY = 'bolao-2025-'
 
-type TKey = 'data' | 'contact' | 'first-access'
+type TKey = 'data' | 'data2' | 'contact' | 'first-access' | 'first-access-2'
 
 export const saveToLocalStorage = (
   key: TKey,
-  value: TData | TContactFormData | boolean
+  value: TData | TData2 | TContactFormData | boolean
 ) => {
   localStorage.setItem(LOCAL_STORAGE_KEY + key, JSON.stringify(value))
 }
@@ -17,13 +17,14 @@ export const getFromLocalStorage = (key: TKey) => {
   return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY + key) || '{}')
 }
 
-export const hasInvalidBet = (bet: TData) => {
+export const hasInvalidBet = (bet: TData2) => {
   return Object.values(bet).some((group) =>
     group.some(({ result }) =>
       result.some((value) => {
         const number = Number(value)
-        if (Number.isNaN(number) || number < 0 || !Number.isInteger(number))
-          return true
+        if (value !== null && Number.isInteger(number) && number >= 0)
+          return false
+        return true
       })
     )
   )
@@ -48,7 +49,7 @@ export const phoneMask = (value: string) => {
     .replace(/(-\d{4})\d+$/, '$1')
 }
 
-export const dataObjectToHtml = (data: TData) => {
+export const dataObjectToHtml = (data: TData2) => {
   let html =
     '<table style="text-align:center;border-collapse: collapse;"><thead><tr>'
   columns.forEach((col) => {

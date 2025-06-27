@@ -11,6 +11,8 @@ export type TGroup = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
 
 export type TData = Record<TGroup, TGame[]>
 
+export type TData2 = Record<'Oitavas de Final', TGame[]>
+
 export const data: TData = {
   A: [
     {
@@ -409,6 +411,75 @@ export const data: TData = {
       local: 'Geodis Park',
       home: 'Pachuca (MEX)',
       away: 'Al-Hilal (SAU)',
+      result: [null, null]
+    }
+  ]
+}
+
+export const data2: TData2 = {
+  'Oitavas de Final': [
+    {
+      date: '28/jun',
+      time: '13:00',
+      local: 'Filadélfia',
+      home: 'Palmeiras',
+      away: 'Botafogo',
+      result: [null, null]
+    },
+    {
+      date: '28/jun',
+      time: '17:00',
+      local: 'Charlotte',
+      home: 'Benfica (POR)',
+      away: 'Chelsea (ING)',
+      result: [null, null]
+    },
+    {
+      date: '29/jun',
+      time: '13:00',
+      local: 'Atlanta',
+      home: 'PSG (FRA)',
+      away: 'Inter Miami (EUA)',
+      result: [null, null]
+    },
+    {
+      date: '29/jun',
+      time: '17:00',
+      local: 'Miami',
+      home: 'Flamengo',
+      away: 'B. Munique (ALE)',
+      result: [null, null]
+    },
+    {
+      date: '30/jun',
+      time: '16:00',
+      local: 'Charlotte',
+      home: 'Inter de Milão (ITA)',
+      away: 'Fluminense',
+      result: [null, null]
+    },
+    {
+      date: '30/jun',
+      time: '22:00',
+      local: 'Camping World',
+      home: 'Manchester City',
+      away: 'Al-Ahly (EGI)',
+      result: [null, null]
+    },
+    {
+      date: '01/jul',
+      time: '16:00',
+      local: 'Miami',
+      home: 'Real Madrid (ESP)',
+      away: 'Juventus (ITA)',
+      result: [null, null]
+    },
+    {
+      date: '01/jul',
+      time: '22:00',
+      local: 'Atlanta',
+      home: 'Borussia D. (ALE)',
+      away: 'Monterrey (MEX)',
       result: [null, null]
     }
   ]

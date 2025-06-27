@@ -10,13 +10,13 @@ import {
   Typography
 } from '@mui/material'
 
-import { TData, TGroup } from '@/constants'
+import { TData2 } from '@/constants'
 import { TBetChangeParams } from '@/hooks'
 
 import * as S from './style'
 
 export type TBetFormProps = {
-  bets: TData
+  bets: TData2
   handleChange: (params: TBetChangeParams) => void
   handleClear: () => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
@@ -40,7 +40,7 @@ export const BetForm = ({
           return (
             <Paper key={group} sx={{ mb: 2 }}>
               <ListSubheader sx={{ bgcolor: 'warning.light', color: 'black' }}>
-                Grupo {group}
+                {group}
               </ListSubheader>
               <List>
                 {games.map((game, index) => {
@@ -81,7 +81,7 @@ export const BetForm = ({
                             defaultValue={game.result[0]}
                             onChange={(e) =>
                               handleChange({
-                                group: group as TGroup,
+                                group: group as any,
                                 index,
                                 key: 'home',
                                 value: e.target.value
@@ -97,7 +97,7 @@ export const BetForm = ({
                             defaultValue={game.result[1]}
                             onChange={(e) =>
                               handleChange({
-                                group: group as TGroup,
+                                group: group as any,
                                 index,
                                 key: 'away',
                                 value: e.target.value

@@ -3,8 +3,8 @@ import { SxProps, Theme } from '@mui/material'
 export const Wrapper: SxProps<Theme> = {
   display: 'grid',
   gridTemplateColumns: {
-    xs: '1fr',
-    md: '1fr 1fr'
+    xs: '1fr'
+    // md: '1fr 1fr'
   },
   gap: 2,
   '& input[type=number]': {

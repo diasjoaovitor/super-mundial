@@ -12,7 +12,7 @@ import {
   TDialogProps,
   TWelcomeProps
 } from '@/components'
-import { contact, data, TData, TGroup } from '@/constants'
+import { contact, data2, TData2 } from '@/constants'
 import { pdf } from '@/functions'
 import { sendEmail } from '@/functions/email'
 import {
@@ -24,7 +24,7 @@ import {
 } from '@/utils'
 
 export type TBetChangeParams = {
-  group: TGroup
+  group: 'Oitavas de Final' // Changed from TGroup to specific group name
   index: number
   key: 'home' | 'away'
   value: string | number
@@ -33,13 +33,13 @@ export type TBetChangeParams = {
 export const useAppHandler = () => {
   ;(pdfMake as any).vfs = pdfFonts.vfs
 
-  const defaultBets = getFromLocalStorage('data')
+  const defaultBets = getFromLocalStorage('data2')
   const defaultContact = getFromLocalStorage('contact')
-  const isFirstAccess = !!getFromLocalStorage('first-access')
+  const isFirstAccess = !!getFromLocalStorage('first-access-2')
 
   const hasBet = Object.keys(defaultBets).length
 
-  const [bets, setBets] = useState<TData>(hasBet > 0 ? defaultBets : data)
+  const [bets, setBets] = useState<TData2>(hasBet > 0 ? defaultBets : data2)
   const [alert, setAlert] = useState<TAlertParams | null>(null)
   const [dialog, setDialog] = useState<TDialogParams | null>(null)
   const [contactFormIsOpened, setContactFormIsOpened] = useState(false)
@@ -50,21 +50,21 @@ export const useAppHandler = () => {
   useEffect(() => {
     if (isFirstAccess) {
       setWelcomeModalIsOpened(true)
-      saveToLocalStorage('first-access', false)
+      saveToLocalStorage('first-access-2', false)
     }
   }, [isFirstAccess])
 
   const handleChange = ({ group, index, key, value }: TBetChangeParams) => {
     setBets((bets) => {
       bets[group][index].result[key === 'home' ? 0 : 1] = value
-      saveToLocalStorage('data', bets)
+      saveToLocalStorage('data2', bets)
       return bets
     })
   }
 
   const handleClear = () => {
-    setBets(data)
-    saveToLocalStorage('data', data)
+    setBets(data2)
+    saveToLocalStorage('data2', data2)
     setDialog(null)
     setAlert({
       severity: 'success',
