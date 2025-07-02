@@ -13,6 +13,8 @@ export type TData = Record<TGroup, TGame[]>
 
 export type TData2 = Record<'Oitavas de Final', TGame[]>
 
+export type TData3 = Record<'Quartas de Final', TGame[]>
+
 export const data: TData = {
   A: [
     {
@@ -463,7 +465,7 @@ export const data2: TData2 = {
       time: '22:00',
       local: 'Camping World',
       home: 'Manchester City',
-      away: 'Al-Ahly (EGI)',
+      away: 'Al-Hilal (SAU)',
       result: [null, null]
     },
     {
@@ -480,6 +482,43 @@ export const data2: TData2 = {
       local: 'Atlanta',
       home: 'Borussia D. (ALE)',
       away: 'Monterrey (MEX)',
+      result: [null, null]
+    }
+  ]
+}
+
+export const data3: TData3 = {
+  'Quartas de Final': [
+    {
+      date: '04/jul',
+      time: '16:00',
+      local: 'Orlando',
+      home: 'Fluminense',
+      away: 'Al-Hilal (SAU)',
+      result: [null, null]
+    },
+    {
+      date: '04/jul',
+      time: '22:00',
+      local: 'Filadélfia',
+      home: 'Palmeiras',
+      away: 'Chelsea (ING)',
+      result: [null, null]
+    },
+    {
+      date: '05/jul',
+      time: '13:00',
+      local: 'Atlanta',
+      home: 'PSG (FRA)',
+      away: 'B. Munique (ALE)',
+      result: [null, null]
+    },
+    {
+      date: '05/jul',
+      time: '17:00',
+      local: 'Nova Jersey',
+      home: 'Borussia D. (ALE)',
+      away: 'Real Madrid (ESP)',
       result: [null, null]
     }
   ]

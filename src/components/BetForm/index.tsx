@@ -10,13 +10,13 @@ import {
   Typography
 } from '@mui/material'
 
-import { TData2 } from '@/constants'
+import { TData3 } from '@/constants'
 import { TBetChangeParams } from '@/hooks'
 
 import * as S from './style'
 
 export type TBetFormProps = {
-  bets: TData2
+  bets: TData3
   handleChange: (params: TBetChangeParams) => void
   handleClear: () => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
