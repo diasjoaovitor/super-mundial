@@ -43,7 +43,7 @@ export const Welcome = ({
 }: TWelcomeProps) => {
   return (
     <Modal
-      title="Bem-vindo ao Bolão do Super Mundial!"
+      title="Bem-vindo ao Bolão da Libertadores!"
       isOpened={isOpened}
       handleClose={handleClose}
     >

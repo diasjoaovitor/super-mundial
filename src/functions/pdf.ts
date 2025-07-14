@@ -1,6 +1,6 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces'
 
-import { TData3 } from '@/constants'
+import { TData } from '@/constants'
 
 type TInfo = {
   name: string
@@ -12,7 +12,6 @@ export const columns = [
   'J',
   'Data',
   'Hora',
-  'Local',
   'Grupo',
   'Mandante',
   '',
@@ -21,13 +20,12 @@ export const columns = [
   'Visitante'
 ]
 
-export const pdf = (data: TData3, info: TInfo): TDocumentDefinitions => {
+export const pdf = (data: TData, info: TInfo): TDocumentDefinitions => {
   const formattedData = Object.entries(data).flatMap(([group, games]) =>
     games.map((game, index) => [
       { text: index + 1 },
       { text: game.date },
       { text: game.time },
-      { text: game.local },
       { text: group },
       { text: game.home },
       { text: game.result[0] },

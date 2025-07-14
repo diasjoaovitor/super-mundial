@@ -10,13 +10,13 @@ import {
   Typography
 } from '@mui/material'
 
-import { TData3 } from '@/constants'
+import { TData } from '@/constants'
 import { TBetChangeParams } from '@/hooks'
 
 import * as S from './style'
 
 export type TBetFormProps = {
-  bets: TData3
+  bets: TData
   handleChange: (params: TBetChangeParams) => void
   handleClear: () => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
@@ -36,11 +36,11 @@ export const BetForm = ({
       onReset={handleClear}
     >
       <Box sx={S.Wrapper}>
-        {Object.entries(bets).map(([group, games]) => {
+        {Object.entries(bets).map(([key, games]) => {
           return (
-            <Paper key={group} sx={{ mb: 2 }}>
+            <Paper key={key} sx={{ mb: 2 }}>
               <ListSubheader sx={{ bgcolor: 'warning.light', color: 'black' }}>
-                {group}
+                {key}
               </ListSubheader>
               <List>
                 {games.map((game, index) => {
@@ -48,24 +48,15 @@ export const BetForm = ({
                     <ListItem key={index} sx={{ flexDirection: 'column' }}>
                       <Box
                         sx={{
-                          ...S.Grid,
-                          gridTemplateColumns: '1fr auto 1fr',
-                          gap: 2,
-                          mb: 1
+                          textAlign: 'center'
                         }}
                       >
                         <Typography
                           variant="caption"
                           color="textSecondary"
-                          textAlign="right"
+                          sx={{ mr: 1 }}
                         >
-                          {game.date}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary">
-                          {game.time}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary">
-                          {game.local}
+                          {`${game.date} ${game.time}`}
                         </Typography>
                       </Box>
                       <Box sx={S.Grid}>
@@ -73,7 +64,7 @@ export const BetForm = ({
                           {game.home}
                         </Typography>
                         <Box
-                          sx={{ ...S.Grid, textAlign: 'center', mx: 2, gap: 2 }}
+                          sx={{ ...S.Grid, textAlign: 'center', mx: 2, gap: 1 }}
                         >
                           <TextField
                             type="number"
@@ -81,9 +72,9 @@ export const BetForm = ({
                             defaultValue={game.result[0]}
                             onChange={(e) =>
                               handleChange({
-                                group: group as any,
+                                key: key as any,
                                 index,
-                                key: 'home',
+                                teamKey: 'home',
                                 value: e.target.value
                               })
                             }
@@ -97,9 +88,9 @@ export const BetForm = ({
                             defaultValue={game.result[1]}
                             onChange={(e) =>
                               handleChange({
-                                group: group as any,
+                                key: key as any,
                                 index,
-                                key: 'away',
+                                teamKey: 'away',
                                 value: e.target.value
                               })
                             }

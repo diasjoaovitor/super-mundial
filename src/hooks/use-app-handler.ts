@@ -12,7 +12,7 @@ import {
   TDialogProps,
   TWelcomeProps
 } from '@/components'
-import { contact, data3, TData3 } from '@/constants'
+import { contact, data, TData, TDataKey } from '@/constants'
 import { pdf } from '@/functions'
 import { sendEmail } from '@/functions/email'
 import {
@@ -24,22 +24,22 @@ import {
 } from '@/utils'
 
 export type TBetChangeParams = {
-  group: 'Quartas de Final' // Changed from TGroup to specific group name
+  key: TDataKey
   index: number
-  key: 'home' | 'away'
+  teamKey: 'home' | 'away'
   value: string | number
 }
 
 export const useAppHandler = () => {
   ;(pdfMake as any).vfs = pdfFonts.vfs
 
-  const defaultBets = getFromLocalStorage('data3')
+  const defaultBets = getFromLocalStorage('data')
   const defaultContact = getFromLocalStorage('contact')
-  const isFirstAccess = !!getFromLocalStorage('first-access-3')
+  const isFirstAccess = !!getFromLocalStorage('first-access')
 
   const hasBet = Object.keys(defaultBets).length
 
-  const [bets, setBets] = useState<TData3>(hasBet > 0 ? defaultBets : data3)
+  const [bets, setBets] = useState<TData>(hasBet > 0 ? defaultBets : data)
   const [alert, setAlert] = useState<TAlertParams | null>(null)
   const [dialog, setDialog] = useState<TDialogParams | null>(null)
   const [contactFormIsOpened, setContactFormIsOpened] = useState(false)
@@ -50,21 +50,21 @@ export const useAppHandler = () => {
   useEffect(() => {
     if (isFirstAccess) {
       setWelcomeModalIsOpened(true)
-      saveToLocalStorage('first-access-3', false)
+      saveToLocalStorage('first-access', false)
     }
   }, [isFirstAccess])
 
-  const handleChange = ({ group, index, key, value }: TBetChangeParams) => {
+  const handleChange = ({ key, index, teamKey, value }: TBetChangeParams) => {
     setBets((bets) => {
-      bets[group][index].result[key === 'home' ? 0 : 1] = value
-      saveToLocalStorage('data3', bets)
+      bets[key]![index].result[teamKey === 'home' ? 0 : 1] = value
+      saveToLocalStorage('data', bets)
       return bets
     })
   }
 
   const handleClear = () => {
-    setBets(data3)
-    saveToLocalStorage('data3', data3)
+    setBets(data)
+    saveToLocalStorage('data', data)
     setDialog(null)
     setAlert({
       severity: 'success',

@@ -1,21 +1,14 @@
 import { TContactFormData } from '@/components'
-import { TData, TData2, TData3 } from '@/constants'
+import { TData } from '@/constants'
 import { columns } from '@/functions'
 
-const LOCAL_STORAGE_KEY = 'bolao-2025-'
+const LOCAL_STORAGE_KEY = 'bolao-llibertadores-2025'
 
-type TKey =
-  | 'data'
-  | 'data2'
-  | 'data3'
-  | 'contact'
-  | 'first-access'
-  | 'first-access-2'
-  | 'first-access-3'
+type TKey = 'data' | 'contact' | 'first-access'
 
 export const saveToLocalStorage = (
   key: TKey,
-  value: TData | TData2 | TData3 | TContactFormData | boolean
+  value: TData | TContactFormData | boolean
 ) => {
   localStorage.setItem(LOCAL_STORAGE_KEY + key, JSON.stringify(value))
 }
@@ -24,7 +17,7 @@ export const getFromLocalStorage = (key: TKey) => {
   return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY + key) || '{}')
 }
 
-export const hasInvalidBet = (bet: TData3) => {
+export const hasInvalidBet = (bet: TData) => {
   return Object.values(bet).some((group) =>
     group.some(({ result }) =>
       result.some((value) => {
@@ -56,7 +49,7 @@ export const phoneMask = (value: string) => {
     .replace(/(-\d{4})\d+$/, '$1')
 }
 
-export const dataObjectToHtml = (data: TData3) => {
+export const dataObjectToHtml = (data: TData) => {
   let html =
     '<table style="text-align:center;border-collapse: collapse;"><thead><tr>'
   columns.forEach((col) => {
@@ -70,7 +63,6 @@ export const dataObjectToHtml = (data: TData3) => {
         index + 1,
         match.date,
         match.time,
-        match.local,
         group,
         match.home,
         match.result[0],

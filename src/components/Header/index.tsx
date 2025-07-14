@@ -35,7 +35,7 @@ export const Header = ({ handleClick }: THeaderProps) => {
       >
         <div>
           <Typography component="h1" variant="h6">
-            Bolão Super Mundial de Clubes 2025
+            Bolão da Libertadores 2025
           </Typography>
           <Link
             href={`https://api.whatsapp.com/send?phone=55${contact.tel}`}
